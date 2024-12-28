@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:31:41 by aaleixo-          #+#    #+#             */
-/*   Updated: 2024/12/12 16:31:41 by aaleixo-         ###   ########.fr       */
+/*   Created: 2024/12/28 17:13:27 by aaleixo-          #+#    #+#             */
+/*   Updated: 2024/12/28 17:13:27 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./lib/so_long.h"
 
-int main(int argc, char **argv)
+int ft_char_count(const char *str, char c)
 {
-
-    return 0;
+    int count = 0;
+    while (*str) 
+    {
+        if (*str == c)
+            count++;
+        str++;
+    }
+    return count;
 }

@@ -12,32 +12,34 @@
 
 NAME = so_long
 SOURCES = \
-	
+	main.c initializer.c map_maker.c image_handler.c utils.c utils_2.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-
-LIBFTPRINTF = ./lib/ft_printf/libftprintf.a
+CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux
+ADLIBS = ./lib/ft_printf/libftprintf.a
+MLX_FLAGS = -L./minilibx-linux -lmlx -lX11 -lXext -lm
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS) $(LIBFTPRINTF)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) -L./lib/ft_printf -lftprintf
+$(NAME): $(OBJECTS) $(ADLIBS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(ADLIBS) $(MLX_FLAGS) -o $(NAME)
 
-$(LIBFTPRINTF):
+$(ADLIBS):
 	make -C ./lib/ft_printf
+	make -C ./minilibx-linux 
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJECTS)
-	make clean -C ./lib/ft_printf
+	make -C ./lib/ft_printf clean
+	make -C ./minilibx-linux clean
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C ./lib/ft_printf
+	make -C ./lib/ft_printf fclean
 
 re: fclean all
 

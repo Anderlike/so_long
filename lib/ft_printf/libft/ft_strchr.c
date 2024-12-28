@@ -6,28 +6,21 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:22:42 by aaleixo-          #+#    #+#             */
-/*   Updated: 2024/05/06 16:43:59 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:51:22 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	char	*ptrsrc;
-
-	if (c > 255)
-		c -= 256;
-	ptrsrc = (char *)s;
-	while (*ptrsrc != c)
+	while (*str) 
 	{
-		if (*ptrsrc == '\0')
-		{
-			return (NULL);
-		}
-		ptrsrc++;
-	}
-	return (ptrsrc);
+        if (*str == c)
+            return (char *)str;
+        str++;
+    }
+    return NULL;
 }
 /*
 #include <stdio.h>
