@@ -69,7 +69,7 @@ void check_fd(char *fd)
     fd = fd + (ft_strlen(fd) - 4);
     if(ft_strncmp(fd, ".ber", 4))
     {
-        perror("Error: Wrong file extension.");
+        perror("Error: Wrong file extension.\n");
         exit(EXIT_FAILURE);
     }
 }

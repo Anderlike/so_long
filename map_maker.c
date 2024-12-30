@@ -105,18 +105,29 @@ void ber_to_array(t_data *data, char **argv)
     int i;
     int bytes;
     char buffer[2];
+    char *temp;
 
     fd = open(argv[1], O_RDONLY);
     i = 0;
     bytes = 1;
     buffer[1] = '\0';
-    while(bytes == 1)
+    while ((bytes = read(fd, buffer, 1)) == 1)
     {
-        bytes = read(fd, buffer, 1);
-        if(bytes != 1)
-            break;
-        if(buffer[0] != '\n' && buffer[0] != '\0')
-            data->map->map[i] = ft_strjoin(data->map->map[i], buffer);
+        if (buffer[0] != '\n')
+        {
+            if (!data->map->map[i])
+                data->map->map[i] = ft_strdup("");
+
+            temp = ft_strjoin(data->map->map[i], buffer);
+            if (!temp)
+            {
+                close(fd);
+                ft_error(data, "Error: Memory allocation failed.\n", 1);
+            }
+
+            free(data->map->map[i]);
+            data->map->map[i] = temp;
+        }
         else
             i++;
     }

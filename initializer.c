@@ -15,21 +15,23 @@
 void	ft_initializer(t_data *data, t_map *map)
 {
 	char	*path;
-    int img_size;
+    int     img_size;
 	t_img	*img;
-
+	
 	data->map = map;
 	img = malloc(sizeof(t_img));
 	if (!img)
-        ft_error(data, "Error: Malloc Failed.\n", 0);
+		ft_error(data, "Error: Malloc Failed.\n", 0);
 	data->img = img;
-    data->step_counter = 0;
+	data->step_counter = 0;
 	data->collectables = 0;
 	path = "textures/player.xpm";
+	if (access(path, F_OK) == -1)
+		ft_error(data, "Error: Player texture file not found.\n", 1);
 	data->img->player = mlx_xpm_file_to_image(data->mlx, path, &img_size, &img_size);
 	if (!data->img->player)
 	{
-        free(img);
-        ft_error(data, "Error: Player texture file not found.\n", 1);
-    }
+		free(img);
+		ft_error(data, "Error: Failed to load player texture.\n", 1);
+	}
 }
