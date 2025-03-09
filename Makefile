@@ -14,8 +14,11 @@ NAME = so_long
 SOURCES = \
 	srcs/handle.c srcs/main.c srcs/map_check.c \
 	srcs/map.c srcs/move.c srcs/ren.c \
-	srcs/utils.c
+	srcs/utils.c srcs/path_check.c
 OBJECTS = $(SOURCES:.c=.o)
+
+MAKE_PRINTF = make -C ./lib/ft_printf
+MAKE_MINILIBX = make -C ./minilibx-linux
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux
@@ -25,8 +28,8 @@ MLX_FLAGS = -L./minilibx-linux -lmlx -lX11 -lXext -lm
 all: $(NAME)
 
 $(ADLIBS):
-	make -C ./minilibx-linux
-	make -C ./lib/ft_printf
+	$(MAKE_MINILIBX)
+	$(MAKE_PRINTF)
 
 $(NAME): $(OBJECTS) $(ADLIBS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(ADLIBS) $(MLX_FLAGS) -o $(NAME)
@@ -36,13 +39,12 @@ $(NAME): $(OBJECTS) $(ADLIBS)
 
 clean:
 	rm -f $(OBJECTS)
-	make -C ./lib/ft_printf clean
-	make clean -C ./minilibx-linux
+	$(MAKE_MINILIBX) clean
+	$(MAKE_PRINTF) clean
 
 fclean: clean
 	rm -f $(NAME)
-	make clean -C ./lib/ft_printf
-	make clean -C ./minilibx-linux
+	$(MAKE_PRINTF) fclean
 
 re: fclean all
 

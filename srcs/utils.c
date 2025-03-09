@@ -41,7 +41,7 @@ void	init_images(t_data *data)
 {
 	data->img.ground = mlx_xpm_file_to_image(data->mlx, GROUND,
 			&data->img.width, &data->img.height);
-	data->img.exit_l = mlx_xpm_file_to_image(data->mlx, EXIT,
+	data->img.exit = mlx_xpm_file_to_image(data->mlx, EXIT,
 			&data->img.width, &data->img.height);
 	data->img.player = mlx_xpm_file_to_image(data->mlx, PLAYER,
 			&data->img.width, &data->img.height);
@@ -65,7 +65,7 @@ void	destroy_images(t_data data)
 	mlx_destroy_image(data.mlx, data.img.wall);
 	mlx_destroy_image(data.mlx, data.img.ground);
 	mlx_destroy_image(data.mlx, data.img.player);
-	mlx_destroy_image(data.mlx, data.img.exit_l);
+	mlx_destroy_image(data.mlx, data.img.exit);
 	mlx_destroy_image(data.mlx, data.img.coin);
 	mlx_destroy_display(data.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:53:35 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/03/09 14:33:49 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:08:54 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 
 char	*ft_count(char *buf, int *newline, char *line)
 {
-	line = ft_strjoin(line, buf);
+	line = ft_strjoin_gnl(line, buf);
 	if (!line)
 		return (NULL);
 	ft_clean(buf, newline, 2);

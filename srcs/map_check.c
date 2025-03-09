@@ -106,8 +106,8 @@ int	check_map(t_data *data)
 	}
 	if (check_chars(data) == 1)
 		ft_error(data, "Map can only have P,C,E,0,1.", 1);
-	if (data->map.count_p > 1)
-		ft_error(data, "Map can only have 1 player.", 1);
+	if (!check_path(data))
+		ft_error(data, "No valid path found in the map.", 1);
 	if (check_rectangle(data) == 1)
 		ft_error(data, "Map needs to be a horizontal rectangle.", 1);
 	if (check_edges(data->map.line_count - 1, data->map.map) == 1)

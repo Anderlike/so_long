@@ -26,11 +26,11 @@
 # include "../minilibx-linux/mlx.h"
 
 # define PLAYER "textures/player.xpm"
-# define EXIT "textures/exit_unlocked.xpm"
+# define EXIT "textures/exit.xpm"
 # define WALL "textures/wall.xpm"
 # define GROUND "textures/ground.xpm"
 # define COIN "textures/coin.xpm"
-# define IMG_SIZE 8
+# define IMG_SIZE 64
 
 typedef struct s_map
 {
@@ -53,7 +53,7 @@ typedef struct s_im
 	int		width;
 	int		height;
 	void	*wall;
-	void	*exit_l;
+	void	*exit;
 	void	*ground;
 	void	*player;
 	int		line_length;
@@ -104,5 +104,6 @@ void	move_player(t_data *data, char direction);
 void	collect_coins(t_data *data, char direction);
 int		win_game(t_data *data);
 int		check_next_tile(t_data *data, char direction, char tile);
+int	check_path(t_data *data);
 
 #endif
