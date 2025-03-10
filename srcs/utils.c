@@ -12,14 +12,14 @@
 
 #include "../lib/so_long.h"
 
-void ft_error(t_data *data, char *error, int bool)
+void	ft_error(t_data *data, char *error, int bool)
 {
-    if(data->map.map && bool == 1)
-    {
-        ft_free(data->map.map);
-    }
-    ft_printf("Error:\n%s\n", error);
-    exit(1);
+	if (data->map.map && bool == 1)
+	{
+		ft_free(data->map.map);
+	}
+	ft_printf("Error:\n%s\n", error);
+	exit(1);
 }
 
 int	init_window(t_data *data)
@@ -28,7 +28,7 @@ int	init_window(t_data *data)
 	if (data->mlx == NULL)
 		return (-1);
 	data->win = mlx_new_window(data->mlx, data->win_width,
-			data->win_height, "Treasure");
+			data->win_height, "so_long - made by aaleixo-");
 	if (data->win == NULL)
 	{
 		free(data->win);

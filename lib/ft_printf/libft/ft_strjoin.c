@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:43:33 by aaleixo-          #+#    #+#             */
-/*   Updated: 2024/12/30 01:32:45 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:44:26 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-
 	i = 0;
 	while (s1[i] != '\0')
 	{

@@ -44,7 +44,6 @@ typedef struct s_map
 	int		c;
 	char	*path;
 	char	**map;
-	char	**copy;
 	int		can_exit;
 	int		collected;
 
@@ -84,7 +83,7 @@ int		retrieve_line_number(char *path);
 void	create_map(char *path, t_data *data);
 void	put_input_in_map(int row, int column, int i, t_data *data);
 void	ft_free(char **tab);
-void 	ft_error(t_data *data, char *error, int bool);
+void	ft_error(t_data *data, char *error, int bool);
 void	init_map(t_data *data);
 void	init_player(t_data *data);
 int		check_map(t_data *data);
@@ -107,6 +106,6 @@ void	move_player(t_data *data, char direction);
 void	collect_coins(t_data *data, char direction);
 int		win_game(t_data *data);
 int		check_next_tile(t_data *data, char direction, char tile);
-void	check_path(t_data *data);
+int		check_path(t_data *data);
 
 #endif

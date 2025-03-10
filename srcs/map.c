@@ -87,7 +87,6 @@ void	create_map(char *path, t_data *data)
 	data->map.line_count = retrieve_line_number(path);
 	data->map.path = path;
 	data->map.map = ft_calloc(data->map.line_count + 1, sizeof(char *));
-	data->map.copy = ft_calloc(data->map.line_count + 1, sizeof(char *));
 	data->steps_count = 0;
 	if (!(data->map.map))
 		return ;

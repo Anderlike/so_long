@@ -33,7 +33,8 @@ int	check_chars(t_data *data)
 		data->y = 0;
 		data->x++;
 	}
-	if (!data->map.count_c || !data->map.count_e || !data->map.count_p)
+	if (!data->map.count_c || data->map.count_p != 1
+		|| data->map.count_e != 1)
 		return (1);
 	else
 		return (0);
@@ -98,7 +99,7 @@ int	check_map(t_data *data)
 	i = 0;
 	j = 0;
 	while (data->map.map[i])
-	{	
+	{
 		while (j < ft_strlen(data->map.map[i]) - 1)
 		{
 			if (ft_strchr("01CEP", data->map.map[i][j]) == NULL)
@@ -109,11 +110,12 @@ int	check_map(t_data *data)
 		i++;
 	}
 	if (check_chars(data) == 1)
-		ft_error(data, "Map can only have P,C,E,0,1.", 1);
+		ft_error(data, "Incorrect amount of objectives(C,P,E).", 1);
 	if (check_rectangle(data) == 1)
 		ft_error(data, "Map needs to be a horizontal rectangle.", 1);
 	if (check_edges(data->map.line_count - 1, data->map.map) == 1)
 		ft_error(data, "Map needs to be surrounded by walls.", 1);
-	check_path(data);
+	if (check_path(data))
+		ft_error(data, "Map doesn't have a valid path.", 1);
 	return (0);
 }
