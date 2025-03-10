@@ -37,7 +37,7 @@ int	retrieve_line_number(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("Error:\nMap could'nt be opened.");
+		ft_printf("Error:\nMap couldn't be opened.\n");
 		exit(0);
 	}
 	else
@@ -87,11 +87,13 @@ void	create_map(char *path, t_data *data)
 	data->map.line_count = retrieve_line_number(path);
 	data->map.path = path;
 	data->map.map = ft_calloc(data->map.line_count + 1, sizeof(char *));
+	data->map.copy = ft_calloc(data->map.line_count + 1, sizeof(char *));
+	data->steps_count = 0;
 	if (!(data->map.map))
 		return ;
 	data->map.fd = open(path, O_RDONLY);
 	if (data->map.fd < 0)
-		ft_error(data, "Map couldn't be opened.", 1);
+		ft_error(data, "Map couldn't be opened.\n", 1);
 	else
 	{
 		put_input_in_map(row, column, i, data);
@@ -112,8 +114,8 @@ void	init_player(t_data *data)
 		{
 			if (data->map.map[i][j] == 'P')
 			{
-				data->p_i = i;
-				data->p_j = j;
+				data->p_x = i;
+				data->p_y = j;
 			}
 			j++;
 		}

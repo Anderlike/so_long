@@ -30,7 +30,7 @@ int	handle_keypress(int keysym, t_data *data)
 	return (0);
 }
 
-int	handle_btnrealease(t_data *data)
+int	handle_btnrelease(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
 	data->win = NULL;

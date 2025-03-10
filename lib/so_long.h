@@ -30,7 +30,7 @@
 # define WALL "textures/wall.xpm"
 # define GROUND "textures/ground.xpm"
 # define COIN "textures/coin.xpm"
-# define IMG_SIZE 64
+# define IMG_SIZE 32
 
 typedef struct s_map
 {
@@ -40,8 +40,11 @@ typedef struct s_map
 	int		count_p;
 	int		count_e;
 	int		count_c;
+	int		e;
+	int		c;
 	char	*path;
 	char	**map;
+	char	**copy;
 	int		can_exit;
 	int		collected;
 
@@ -66,10 +69,10 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	int		steps_count;
-	int		p_i;
-	int		p_j;
-	int		i;
-	int		j;
+	int		p_x;
+	int		p_y;
+	int		x;
+	int		y;
 	int		win_height;
 	int		win_width;
 	t_im	img;
@@ -98,12 +101,12 @@ void	destroy_images(t_data data);
 int		handle_resize(t_data *data);
 void	loop_images(t_data data);
 int		handle_keypress(int keysym, t_data *data);
-int		handle_btnrealease(t_data *data);
+int		handle_btnrelease(t_data *data);
 void	move_msg(t_data *data);
 void	move_player(t_data *data, char direction);
 void	collect_coins(t_data *data, char direction);
 int		win_game(t_data *data);
 int		check_next_tile(t_data *data, char direction, char tile);
-int	check_path(t_data *data);
+void	check_path(t_data *data);
 
 #endif

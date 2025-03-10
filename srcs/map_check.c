@@ -14,20 +14,24 @@
 
 int	check_chars(t_data *data)
 {
-	while (data->map.map[data->i])
+	while (data->map.map[data->x])
 	{
-		while (data->map.map[data->i][data->j])
+		while (data->map.map[data->x][data->y])
 		{
-			if (data->map.map[data->i][data->j] == 'P')
+			if (data->map.map[data->x][data->y] == 'P')
+			{
+				data->p_x = data->x;
+				data->p_y = data->y;
 				data->map.count_p++;
-			else if (data->map.map[data->i][data->j] == 'E')
+			}
+			else if (data->map.map[data->x][data->y] == 'E')
 				data->map.count_e++;
-			else if (data->map.map[data->i][data->j] == 'C')
+			else if (data->map.map[data->x][data->y] == 'C')
 				data->map.count_c++;
-			data->j++;
+			data->y++;
 		}
-		data->j = 0;
-		data->i++;
+		data->y = 0;
+		data->x++;
 	}
 	if (!data->map.count_c || !data->map.count_e || !data->map.count_p)
 		return (1);
@@ -106,11 +110,10 @@ int	check_map(t_data *data)
 	}
 	if (check_chars(data) == 1)
 		ft_error(data, "Map can only have P,C,E,0,1.", 1);
-	if (!check_path(data))
-		ft_error(data, "No valid path found in the map.", 1);
 	if (check_rectangle(data) == 1)
 		ft_error(data, "Map needs to be a horizontal rectangle.", 1);
 	if (check_edges(data->map.line_count - 1, data->map.map) == 1)
 		ft_error(data, "Map needs to be surrounded by walls.", 1);
+	check_path(data);
 	return (0);
 }

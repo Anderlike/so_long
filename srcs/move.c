@@ -19,10 +19,10 @@ void	move_msg(t_data *data)
 
 int	check_next_tile(t_data *data, char direction, char tile)
 {
-	if ((direction == 'd' && data->map.map[data->p_i][data->p_j + 1] == tile)
-		|| (direction == 'a' && data->map.map[data->p_i][data->p_j - 1] == tile)
-		|| (direction == 's' && data->map.map[data->p_i + 1][data->p_j] == tile)
-		|| (direction == 'w' && data->map.map[data->p_i - 1][data->p_j] == tile)
+	if ((direction == 'd' && data->map.map[data->p_x][data->p_y + 1] == tile)
+		|| (direction == 'a' && data->map.map[data->p_x][data->p_y - 1] == tile)
+		|| (direction == 's' && data->map.map[data->p_x + 1][data->p_y] == tile)
+		|| (direction == 'w' && data->map.map[data->p_x - 1][data->p_y] == tile)
 		)
 		return (0);
 	else
@@ -31,10 +31,10 @@ int	check_next_tile(t_data *data, char direction, char tile)
 
 void	collect_coins(t_data *data, char direction)
 {
-	if ((direction == 'd' && data->map.map[data->p_i][data->p_j + 1] == 'C')
-		|| (direction == 'a' && data->map.map[data->p_i][data->p_j - 1] == 'C')
-		|| (direction == 's' && data->map.map[data->p_i + 1][data->p_j] == 'C')
-		|| (direction == 'w' && data->map.map[data->p_i - 1][data->p_j] == 'C'))
+	if ((direction == 'd' && data->map.map[data->p_x][data->p_y + 1] == 'C')
+		|| (direction == 'a' && data->map.map[data->p_x][data->p_y - 1] == 'C')
+		|| (direction == 's' && data->map.map[data->p_x + 1][data->p_y] == 'C')
+		|| (direction == 'w' && data->map.map[data->p_x - 1][data->p_y] == 'C'))
 		data->map.collected++;
 }
 
@@ -60,17 +60,17 @@ void	move_player(t_data *data, char direction)
 	collect_coins(data, direction);
 	if (data->map.collected == data->map.count_c)
 		data->map.can_exit = 1;
-	data->map.map[data->p_i][data->p_j] = '0';
+	data->map.map[data->p_x][data->p_y] = '0';
 	if (direction == 'd')
-		data->p_j++;
+		data->p_y++;
 	else if (direction == 'a')
-		data->p_j--;
+		data->p_y--;
 	else if (direction == 's')
-		data->p_i++;
+		data->p_x++;
 	else if (direction == 'w')
-		data->p_i--;
+		data->p_x--;
 	move_msg(data);
-	if (data->map.can_exit == 1 && data->map.map[data->p_i][data->p_j] == 'E')
+	if (data->map.can_exit == 1 && data->map.map[data->p_x][data->p_y] == 'E')
 		win_game(data);
-	data->map.map[data->p_i][data->p_j] = 'P';
+	data->map.map[data->p_x][data->p_y] = 'P';
 }

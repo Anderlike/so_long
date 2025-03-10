@@ -6,105 +6,90 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:25:28 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/03/09 19:01:03 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:51:14 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib/so_long.h"
 
-void	ft_free_int(int **tab, int size)
+int	ft_free_array(char **ar1, char **ar2, int i)
 {
-	int	i;
-
-	for (i = 0; i < size; i++)
-		free(tab[i]);
-	free(tab);
-	tab = NULL;
-	return ;
-}
-
-int	is_valid_position(t_data *data, int x, int y, int **visited)
-{
-	if (x < 0 || x >= data->map.line_count || y < 0 || y >= (int)ft_strlen(data->map.map[0]))
-		return (0);
-	if (data->map.map[x][y] == '1' || visited[x][y])
-		return (0);
-	return (1);
-}
-
-int	dfs(t_data *data, int x, int y, int **visited, int *collectable_count)
-{
-	int	stack[data->map.line_count * ft_strlen(data->map.map[0])][2];
-	int	top = -1;
-
-	stack[++top][0] = x;
-	stack[top][1] = y;
-
-	while (top >= 0)
+	while (i > 0)
 	{
-		int	curr_x = stack[top][0];
-		int	curr_y = stack[top--][1];
-
-		printf("Visiting: (%d, %d)\n", curr_x, curr_y);
-
-		if (data->map.map[curr_x][curr_y] == 'E' && (*collectable_count) == data->map.count_c)
-			return (1);
-		if (data->map.map[curr_x][curr_y] == 'C')
-			(*collectable_count)++;
-
-		visited[curr_x][curr_y] = 1;
-
-		if (is_valid_position(data, curr_x + 1, curr_y, visited))
-		{
-			stack[++top][0] = curr_x + 1;
-			stack[top][1] = curr_y;
-		}
-		if (is_valid_position(data, curr_x - 1, curr_y, visited))
-		{
-			stack[++top][0] = curr_x - 1;
-			stack[top][1] = curr_y;
-		}
-		if (is_valid_position(data, curr_x, curr_y + 1, visited))
-		{
-			stack[++top][0] = curr_x;
-			stack[top][1] = curr_y + 1;
-		}
-		if (is_valid_position(data, curr_x, curr_y - 1, visited))
-		{
-			stack[++top][0] = curr_x;
-			stack[top][1] = curr_y - 1;
-		}
+		free(ar1[i]);
+		free(ar2[i]);
+		i--;
 	}
+	free(ar1);
+	free(ar2);
 	return (0);
 }
 
-int	check_path(t_data *data)
+void	scan_player(t_data *data)
 {
-	int	**visited;
-	int	i;
-	int	collectable_count = 0;
-	int	curr_x = data->p_i;
-	int	curr_y = data->p_j;
-
-	visited = malloc(data->map.line_count * sizeof(int *));
-	if (!visited)
-		return (0);
-	for (i = 0; i < data->map.line_count; i++)
+	data->p_y = 0;
+	data->p_x = 0;
+	while (data->p_y < data->y)
 	{
-		visited[i] = ft_calloc(ft_strlen(data->map.map[0]), sizeof(int));
-		if (!visited[i])
+		while (data->p_x < data->x)
 		{
-			ft_free_int(visited, i);
-			return (0);
+			if (data->map.map[data->p_y][data->p_x] == 'P')
+				break ;
+			data->p_x++;
 		}
+		if (data->map.map[data->p_y][data->p_x] == 'P')
+			break ;
+		data->p_x = 0;
+		data->p_y++;
 	}
+}
 
-	if (!dfs(data, curr_x, curr_y, visited, &collectable_count))
+void	move_on_paths(int y, int x, t_data *data)
+{
+	char	type;
+
+	ft_printf("P_Y: %d\nP_X: %d\nY: %d\nX: %d" , y, x, data->x, data->y);
+	if (y < 0 || x < 0 || x >= data->x || y >= data->y)
+		return;
+
+	type = data->map.copy[y][x];
+	if (type == 'C')
 	{
-		ft_free_int(visited, data->map.line_count);
-		return (0);
+		data->map.count_c -= 1;
+		data->map.copy[y][x] = '1';
+	}
+	else if (type == 'E')
+	{
+		data->map.count_e -= 1;
+		data->map.copy[y][x] = '1';
+	}
+	else if (type == '0' || type == 'P')
+		data->map.copy[y][x] = '1';
+	else
+		return ;
+	move_on_paths(y + 1, x, data);
+	move_on_paths(y - 1, x, data);
+	move_on_paths(y, x + 1, data);
+	move_on_paths(y, x - 1, data);
+}
+
+void	check_path(t_data *data)
+{
+	if (!data || !data->map.map || !data->map.copy)
+	{
+		ft_printf("Error:\nInvalid map data.\n");
+		exit(1);
 	}
 
-	ft_free_int(visited, data->map.line_count);
-	return (1);
+	data->map.count_c = data->map.c;
+	data->map.count_e = data->map.e;
+	scan_player(data);
+	move_on_paths(data->p_y, data->p_x, data);
+
+	if (data->map.count_c != 0 || data->map.count_e >= data->map.e)
+	{
+		ft_printf("Error:\nMap can't be finished with all coins collected.\n");
+		ft_free_array(data->map.map, data->map.copy, data->y);
+		exit(0);
+	}
 }

@@ -14,8 +14,8 @@
 
 void	init_map(t_data *data)
 {
-	data->i = 0;
-	data->j = 0;
+	data->x = 0;
+	data->y = 0;
 	data->map.count_p = 0;
 	data->map.count_e = 0;
 	data->map.count_c = 0;

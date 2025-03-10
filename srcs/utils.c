@@ -56,7 +56,7 @@ void	loop_images(t_data data)
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_hook(data.win, KeyPress, KeyPressMask, &handle_keypress, &data);
 	mlx_hook(data.win, ClientMessage, LeaveWindowMask,
-		&handle_btnrealease, &data);
+		&handle_btnrelease, &data);
 	mlx_loop(data.mlx);
 }
 
