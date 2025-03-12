@@ -103,19 +103,19 @@ int	check_map(t_data *data)
 		while (j < ft_strlen(data->map.map[i]) - 1)
 		{
 			if (ft_strchr("01CEP", data->map.map[i][j]) == NULL)
-				ft_error(data, "Map is invalid.", 1);
+				ft_error(*data, "Invalid characters.");
 			j++;
 		}
 		j = 0;
 		i++;
 	}
 	if (check_chars(data) == 1)
-		ft_error(data, "Incorrect amount of objectives(C,P,E).", 1);
+		ft_error(*data, "Incorrect amount of objectives(C,P,E).");
 	if (check_rectangle(data) == 1)
-		ft_error(data, "Map needs to be a horizontal rectangle.", 1);
+		ft_error(*data, "Map needs to be a rectangle.");
 	if (check_edges(data->map.line_count - 1, data->map.map) == 1)
-		ft_error(data, "Map needs to be surrounded by walls.", 1);
+		ft_error(*data, "Map needs to be surrounded by walls.");
 	if (check_path(data))
-		ft_error(data, "Map doesn't have a valid path.", 1);
+		ft_error(*data, "Map doesn't have a valid path.");
 	return (0);
 }

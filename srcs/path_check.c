@@ -6,7 +6,7 @@
 /*   By: aaleixo- <aaleixo-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 18:25:28 by aaleixo-          #+#    #+#             */
-/*   Updated: 2025/03/10 19:43:11 by aaleixo-         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:15:08 by aaleixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,8 @@ void	flood_fill(t_data *data, int x, int y, int **visited)
 
 void	free_visited(int **visited, int line_count)
 {
-	int	i;
-
-	i = 0;
-	while (i < line_count)
-	{
-		free(visited[i]);
-		i++;
-	}
+	while (line_count--)
+		free(visited[line_count]);
 	free(visited);
 }
 
@@ -71,8 +65,8 @@ int	check_path(t_data *data)
 	flood_fill(data, data->p_x, data->p_y, visited);
 	if (is_unreachable(data, visited))
 	{
-		ft_error(data, "Not all objectives are reachable.", 1);
 		free_visited(visited, data->map.line_count);
+		ft_error(*data, "Not all objectives are reachable.");
 		return (1);
 	}
 	free_visited(visited, data->map.line_count);

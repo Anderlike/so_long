@@ -14,7 +14,7 @@ NAME = so_long
 SOURCES = \
 	srcs/handle.c srcs/main.c srcs/map_check.c \
 	srcs/map.c srcs/move.c srcs/ren.c \
-	srcs/utils.c srcs/path_check.c
+	srcs/utils.c srcs/utils2.c srcs/path_check.c
 OBJECTS = $(SOURCES:.c=.o)
 
 MAKE_PRINTF = make -C ./lib/ft_printf

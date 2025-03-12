@@ -12,8 +12,21 @@
 
 #include "../lib/so_long.h"
 
+void	main_helper(t_data data)
+{
+	init_window(&data);
+	init_images(&data);
+	render(&data);
+	loop_images(data);
+	destroy_images(data);
+	free(data.mlx);
+	if (data.map.map)
+		ft_free(data.map.map);
+}
+
 void	init_map(t_data *data)
 {
+	data->mlx = NULL;
 	data->x = 0;
 	data->y = 0;
 	data->map.count_p = 0;
@@ -21,8 +34,6 @@ void	init_map(t_data *data)
 	data->map.count_c = 0;
 	data->map.collected = 0;
 	data->map.can_exit = 0;
-	data->win_height = data->map.line_count * IMG_SIZE;
-	data->win_width = (ft_strlen(data->map.map[0]) - 1) * IMG_SIZE;
 	data->img.height = IMG_SIZE;
 	data->img.width = IMG_SIZE;
 }
@@ -33,23 +44,21 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		data.map.fd = open(argv[1], O_RDONLY);
+		if (data.map.fd < 0)
+		{
+			ft_printf("Error\nMap couldn't be opened.\n");
+			exit(0);
+		}
+		init_map(&data);
+		create_map(argv[1], &data);
+		check_map(&data);
 		data.mlx = mlx_init();
 		if (!data.mlx)
-		{
-			ft_printf("Error:\nMinilibx not initiated correctly.\n");
-			exit(1);
-		}
-		create_map(argv[1], &data);
-		init_map(&data);
-		check_map(&data);
+			ft_error(data, "Minilibx error.");
 		init_player(&data);
-		init_window(&data);
-		init_images(&data);
-		render(&data);
-		loop_images(data);
-		destroy_images(data);
-		free(data.mlx);
-		if (data.map.map)
-			ft_free(data.map.map);
+		main_helper(data);
+		return (0);
 	}
+	ft_printf("Error\nIncorrect amount of args.\n");
 }

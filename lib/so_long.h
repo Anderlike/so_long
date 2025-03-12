@@ -81,9 +81,9 @@ typedef struct s_data
 
 int		retrieve_line_number(char *path);
 void	create_map(char *path, t_data *data);
-void	put_input_in_map(int row, int column, int i, t_data *data);
+void	put_input_in_map(size_t row, size_t column, int i, t_data *data);
 void	ft_free(char **tab);
-void	ft_error(t_data *data, char *error, int bool);
+void	ft_error(t_data data, char *error);
 void	init_map(t_data *data);
 void	init_player(t_data *data);
 int		check_map(t_data *data);
@@ -107,5 +107,7 @@ void	collect_coins(t_data *data, char direction);
 int		win_game(t_data *data);
 int		check_next_tile(t_data *data, char direction, char tile);
 int		check_path(t_data *data);
+void	ext_check(t_data *data);
+void	ext_checker(char *path, t_data *data);
 
 #endif

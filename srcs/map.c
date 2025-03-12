@@ -54,7 +54,7 @@ int	retrieve_line_number(char *path)
 	return (line_count);
 }
 
-void	put_input_in_map(int row, int column, int i, t_data *data)
+void	put_input_in_map(size_t row, size_t column, int i, t_data *data)
 {
 	char	*line;
 
@@ -73,37 +73,37 @@ void	put_input_in_map(int row, int column, int i, t_data *data)
 		line = get_next_line(data->map.fd);
 	}
 	data->map.map[row] = NULL;
+	close(data->map.fd);
 }
 
 void	create_map(char *path, t_data *data)
 {
-	int		row;
 	int		i;
+	size_t	row;
 	size_t	column;
 
 	i = 0;
 	row = 0;
 	column = 0;
+	data->steps_count = 0;
 	data->map.line_count = retrieve_line_number(path);
 	data->map.path = path;
 	data->map.map = ft_calloc(data->map.line_count + 1, sizeof(char *));
-	data->steps_count = 0;
 	if (!(data->map.map))
-		return ;
-	data->map.fd = open(path, O_RDONLY);
-	if (data->map.fd < 0)
-		ft_error(data, "Map couldn't be opened.\n", 1);
-	else
 	{
-		put_input_in_map(row, column, i, data);
-		close(data->map.fd);
+		ft_printf("Error\nMap calloc failed.\n");
+		exit(0);
 	}
+	ext_checker(path, data);
+	put_input_in_map(row, column, i, data);
+	data->win_height = data->map.line_count * IMG_SIZE;
+	data->win_width = (ft_strlen(data->map.map[0]) - 1) * IMG_SIZE;
 }
 
 void	init_player(t_data *data)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;

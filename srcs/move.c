@@ -14,7 +14,7 @@
 
 void	move_msg(t_data *data)
 {
-	printf("Moves counter : %d\n", data->steps_count);
+	ft_printf("Moves counter : %d\n", data->steps_count);
 }
 
 int	check_next_tile(t_data *data, char direction, char tile)
@@ -52,15 +52,19 @@ int	win_game(t_data *data)
 
 void	move_player(t_data *data, char direction)
 {
-	if (check_next_tile(data, direction, '1') == 0
-		|| (data->map.can_exit == 0
-			&& check_next_tile(data, direction, 'E') == 0))
+	static char	previous_tile = '0';
+
+	if (check_next_tile(data, direction, '1') == 0)
 		return ;
 	data->steps_count++;
 	collect_coins(data, direction);
 	if (data->map.collected == data->map.count_c)
 		data->map.can_exit = 1;
-	data->map.map[data->p_x][data->p_y] = '0';
+	data->map.map[data->p_x][data->p_y] = previous_tile;
+	if (check_next_tile(data, direction, 'E') == 0)
+		previous_tile = 'E';
+	else
+		previous_tile = '0';
 	if (direction == 'd')
 		data->p_y++;
 	else if (direction == 'a')
