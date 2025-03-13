@@ -14,6 +14,7 @@
 
 void	main_helper(t_data data)
 {
+	init_player(&data);
 	init_window(&data);
 	init_images(&data);
 	render(&data);
@@ -44,8 +45,14 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		int bits;
+		char s[2];
+
 		data.map.fd = open(argv[1], O_RDONLY);
-		if (data.map.fd < 0)
+		bits = read(data.map.fd, s, 1);
+		close(data.map.fd);
+		data.map.fd = open(argv[1], O_RDONLY);
+		if (data.map.fd < 0 || bits == 0)
 		{
 			ft_printf("Error\nMap couldn't be opened.\n");
 			exit(0);
@@ -53,10 +60,8 @@ int	main(int argc, char **argv)
 		init_map(&data);
 		create_map(argv[1], &data);
 		check_map(&data);
-		data.mlx = mlx_init();
-		if (!data.mlx)
+		if (!(data.mlx = mlx_init()))
 			ft_error(data, "Minilibx error.");
-		init_player(&data);
 		main_helper(data);
 		return (0);
 	}
