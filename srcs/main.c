@@ -42,25 +42,25 @@ void	init_map(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	int		bits;
+	char	s[2];
 
 	if (argc == 2)
 	{
-		int bits;
-		char s[2];
-
 		data.map.fd = open(argv[1], O_RDONLY);
 		bits = read(data.map.fd, s, 1);
 		close(data.map.fd);
 		data.map.fd = open(argv[1], O_RDONLY);
 		if (data.map.fd < 0 || bits == 0)
 		{
-			ft_printf("Error\nMap couldn't be opened.\n");
+			ft_printf("Error\nInvalid map.\n");
 			exit(0);
 		}
 		init_map(&data);
 		create_map(argv[1], &data);
 		check_map(&data);
-		if (!(data.mlx = mlx_init()))
+		data.mlx = mlx_init();
+		if (!data.mlx)
 			ft_error(data, "Minilibx error.");
 		main_helper(data);
 		return (0);
